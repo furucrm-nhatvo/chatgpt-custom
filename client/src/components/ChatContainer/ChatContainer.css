@@ -1,0 +1,33 @@
+.chat-item{
+    width: 100%;
+    color: white;
+    background-color: transparent;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .25s;
+}
+.chat-item:hover{
+    background-color: rgba(42,43,50);
+}
+.chat-item.selected{
+    background-color: #343541;
+}
+.chat-item-action-container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.chat-item-action-container > div > svg{
+    fill: rgba(197,197,210);
+    width: 1rem;
+    transition: all .25s;
+    display: flex;
+}
+.chat-item-action-container > div > svg:hover{
+    fill: white;
+}

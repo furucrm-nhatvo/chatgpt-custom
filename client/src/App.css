@@ -1,0 +1,117 @@
+.App{
+  display: flex;
+  background-color: #282c34;
+  color: white;
+  inset: 0;
+  position: absolute;
+  text-align: center;
+  font-size: 13px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #888; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f1f1f1; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.sidemenu{
+  width: 260px;
+  height: 100%;
+  background-color: #202123;
+  padding: 10px;
+  text-align: left;
+  flex-shrink: 0;
+  z-index: 2;
+  border-right: 1px solid #424242;
+}
+.sidemenu-btn{
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  padding: 12px;
+  border:1px solid white;
+  border-radius: 5px;
+  text-align: left;
+  transition: ease .25s all;
+}
+.sidemenu-btn:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.sidemenu-btn option {
+  margin: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+.sidemenu-btn span{
+   padding-left: 6px;
+   padding-right: 12px;
+}
+.chatbox{
+  flex: 1;
+  background-color: #343541;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.chat-input-holder{
+  width: 100%;
+}
+.chat-input-textarea{
+   background-color: #40414f;
+   width: 100%;
+   border:none;
+   outline:none;
+   padding: 12px;
+   color:white;
+   font-size:1.25rem;
+   box-shadow: 0 0 4px 0 rgba(0,0,0,0.25);
+}
+.chat-log{
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.config-container{
+  position: absolute;
+  height: 100%;
+  transition: all .5s
+}
+.config-container.open{
+  transform: translateX(260px);
+}
+.config-padder{
+  z-index: -1;
+  width: 0px;
+  transition: all .5s;
+}
+.config-padder.open{
+  width: 260px;
+}
