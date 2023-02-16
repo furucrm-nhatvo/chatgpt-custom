@@ -8,21 +8,15 @@ import { useConfigStore } from './store/configStore'
 
 
 function App() {
-  const setModels = useConfigStore(state=>state.setModels)
+  const getModels = useConfigStore(state=>state.getModels)
   const isConfigOpen = useConfigStore(state=>state.isConfigOpen)
   const currentChat = useConfigStore(state=>state.currentChat)
+  const getChats = useConfigStore(state=>state.getChats)
   useEffect(()=>{
     getModels()
+    getChats()
   },[])
-  const getModels = async ()=>{
-    const response = await fetch('http://localhost:3080/models')
-    const {models, error} = await response.json()
-    if(error){
-      console.log(error)
-      return
-    }
-    setModels(models.map(model=>model.id))
-  }
+  
   return (
     <div className="App">
       <ChatContainer/>

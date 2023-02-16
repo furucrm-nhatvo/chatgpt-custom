@@ -4,63 +4,146 @@ export const useConfigStore = create((set, get) => ({
   chats: [],
   models: ['text-davinci-003'],
   currentChat: {},
-  isConfigOpen:false,
-  toggleConfig: ()=>set((state)=>({isConfigOpen:!state.isConfigOpen})),
-  setModels: (models)=>set({models}),
-  setConfig: (key, value)=>{
+  isConfigOpen: false,
+  toggleConfig: () => set((state) => ({ isConfigOpen: !state.isConfigOpen })),
+  setModels: (models) => set({ models }),
+  setConfig: (key, value) => {
     const updateChat = {
-        ...get().currentChat,
-        config:{
-            ...get().currentChat.config,
-            [key]:value
-        }
+      ...get().currentChat,
+      config: {
+        ...get().currentChat.config,
+        [key]: value
+      }
     }
-    set((state)=>({
-        currentChat: updateChat,
-        chats: state.chats.map(chat=>{
-            if(chat.id === updateChat.id){
-                return updateChat
-            }
-            return chat
-        })
+    set(() => ({
+      currentChat: updateChat,
     }))
   },
-  addChatLog: (log)=>{
-    const updateChat = {
-        ...get().currentChat,
-        chatLog: [...get().currentChat.chatLog, log]
+  saveConfig: async ()=>{
+    const updateChat = get().currentChat
+    const response = await fetch(`http://localhost:3080/db/chats/${updateChat.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updateChat)
+    })
+    const { error } = await response.json()
+    if (error) {
+      console.log(error)
+      return
     }
-    set({currentChat: updateChat})
+    set((state) => ({
+      chats: state.chats.map(chat => {
+        if (chat.id === updateChat.id) {
+          return updateChat
+        }
+        return chat
+      })
+    }))
   },
-  clearChatLog: ()=>{
+  addChatLog: async (log) => {
     const updateChat = {
-        ...get().currentChat,
-        chatLog: []
+      ...get().currentChat,
+      chatLog: [...get().currentChat.chatLog, log]
     }
-    set({currentChat: updateChat})
+    const response = await fetch(`http://localhost:3080/db/chats/${updateChat.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updateChat)
+    })
+    const { error } = await response.json()
+    if (error) {
+      console.log(error)
+      return
+    }
+    set({ currentChat: updateChat })
   },
-  setCurrentChat: (currentChat)=>set({currentChat}),
-  addChat: ()=>{
+  clearChatLog: async () => {
+    const updateChat = {
+      ...get().currentChat,
+      chatLog: []
+    }
+    const response = await fetch(`http://localhost:3080/db/chats/${updateChat.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updateChat)
+    })
+    const { error } = await response.json()
+    if (error) {
+      console.log(error)
+      return
+    }
+    set({ currentChat: updateChat })
+  },
+  setCurrentChat: (currentChat) => set({ currentChat }),
+  setChats: (chats) => set({ chats }),
+  addChat: async () => {
     const newChat = {
-        id: uuidv4(),
-        config: {
-            model: 'text-davinci-003',
-            temperature: 0.5,
-            tokens: 600,
-            title: 'New chat',
-        },
-        chatLog: []
+      id: uuidv4(),
+      config: {
+        model: 'text-davinci-003',
+        temperature: 0.5,
+        tokens: 600,
+        title: 'New chat',
+      },
+      chatLog: []
     }
     //add to firebase
-    set((state) => ({ 
-        chats: [...state.chats, newChat],
-        currentChat: newChat
+    const response = await fetch('http://localhost:3080/db/chats', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newChat)
+    })
+    const { error } = await response.json()
+    if (error) {
+      console.log(error)
+      return
+    }
+    set((state) => ({
+      chats: [...state.chats, newChat],
+      currentChat: newChat
     }))
   },
-  deleteChat: (chatId)=>{
-    set((state) => ({ 
-        chats: state.chats.filter(chat=>chat.id!==chatId),
-        isConfigOpen: false
+  deleteChat: async (chatId) => {
+    const response = await fetch(`http://localhost:3080/db/chats/${chatId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    const { error } = await response.json()
+    if (error) {
+      console.log(error)
+      return
+    }
+    set((state) => ({
+      chats: state.chats.filter(chat => chat.id !== chatId),
+      isConfigOpen: false
     }))
+  },
+  getChats: async ()=>{
+    const response = await fetch('http://localhost:3080/db/chats')
+    const {chats, error} = await response.json()
+    if(error){
+      console.log(error)
+      return
+    }
+    get().setChats(chats)
+  },
+  getModels : async ()=>{
+    const response = await fetch('http://localhost:3080/openai/models')
+    const {models, error} = await response.json()
+    if(error){
+      console.log(error)
+      return
+    }
+    get().setModels(models.map(model=>model.id))
   }
 }))

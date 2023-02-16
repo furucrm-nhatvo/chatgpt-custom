@@ -4,6 +4,7 @@ import { useConfigStore } from '../../store/configStore'
 export default function ChatConfig() {
     const currentChat = useConfigStore(state=>state.currentChat)
     const setConfig = useConfigStore(state=>state.setConfig)
+    const saveConfig = useConfigStore(state=>state.saveConfig)
     const models = useConfigStore(state=>state.models)
     const { model, temperature, tokens, title } = currentChat.config || {}
     return (
@@ -39,6 +40,7 @@ export default function ChatConfig() {
                 value={tokens||''}
                 onChange={(e) => setConfig('tokens', e.target.value)}
             ></input>
+            <div className='sidemenu-btn' style={{cursor:'pointer'}} onClick={saveConfig}>Save</div>
         </aside>
     )
 }

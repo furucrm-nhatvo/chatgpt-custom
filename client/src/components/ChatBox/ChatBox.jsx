@@ -13,7 +13,7 @@ export default function ChatBox() {
         const newChatLog = [...chatLog, {user:'me', message:input}]
         addChatLog({user:'me', message:input})
         setInput('')
-        const response = await fetch('http://localhost:3080', {
+        const response = await fetch('http://localhost:3080/openai/completion', {
           method: 'POST',
           headers: {
             'Content-Type':'application/json'
