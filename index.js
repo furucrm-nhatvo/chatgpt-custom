@@ -23,14 +23,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 app.use(express.static(path.join(__dirname, "./client/dist")));
-app.get("*", function (_, res) {
-  res.sendFile(
-    path.join(__dirname, "./client/dist/index.html"),
-    function (err) {
-      res.status(500).send(err);
-    }
-  );
-});
+
 const port = 3080;
 
 app.post('/openai/completion', async (req, res) => {
@@ -143,7 +136,14 @@ app.delete('/db/chats/:id', async (req, res) => {
         })
     }
 })
-
+app.get("*", function (_, res) {
+    res.sendFile(
+      path.join(__dirname, "./client/dist/index.html"),
+      function (err) {
+        res.status(500).send(err);
+      }
+    );
+  });
 
 app.listen(port, () => {
     console.log('listening at port', port)
