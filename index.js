@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
-
+const path = require('path')
 const serviceAccount = require('./serviceAccountKey.json');
 
 initializeApp({
@@ -15,13 +15,22 @@ const db = getFirestore();
 
 
 const configuration = new Configuration({
-    organization: "org-Hw74F59UFBu7mnHsKx116yFm",
-    apiKey: "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",
+    organization: process.env.OPENAI_ORG || "org-Hw74F59UFBu7mnHsKx116yFm",
+    apiKey: process.env.OPENAI_API_KEY || "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",
 });
 const openai = new OpenAIApi(configuration);
 const app = express()
 app.use(bodyParser.json())
 app.use(cors())
+app.use(express.static(path.join(__dirname, "./client/dist")));
+app.get("*", function (_, res) {
+  res.sendFile(
+    path.join(__dirname, "./client/dist/index.html"),
+    function (err) {
+      res.status(500).send(err);
+    }
+  );
+});
 const port = 3080;
 
 app.post('/openai/completion', async (req, res) => {
