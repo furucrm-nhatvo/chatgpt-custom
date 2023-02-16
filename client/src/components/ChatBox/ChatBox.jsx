@@ -5,7 +5,7 @@ import ChatMessage from '../ChatMessage/ChatMessage'
 
 export default function ChatBox() {
   const currentChat = useConfigStore(state => state.currentChat)
-  const chatLog = currentChat.chatLog || []
+  const chatLog = currentChat?.chatLog || []
   const addChatLog = useConfigStore(state => state.addChatLog)
   const [input, setInput] = useState('')
   const handleSubmit = async (event) => {

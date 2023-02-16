@@ -138,8 +138,10 @@ export const useConfigStore = create((set, get) => ({
       console.log(error)
       return
     }
-    get().setChats(chats)
-    get().setCurrentChat(chats[0])
+    set(()=>({
+      chats,
+      currentChat: chats[0] || {}
+    }))
   },
   getModels : async ()=>{
     const response = await fetch(`${process.env.FRONTEND_URL || ''}/openai/models`)
@@ -148,6 +150,8 @@ export const useConfigStore = create((set, get) => ({
       console.log(error)
       return
     }
-    get().setModels(models.map(model=>model.id))
+    set(()=>({
+      models:models.map(model=>model.id)
+    }))
   }
 }))
