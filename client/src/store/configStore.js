@@ -125,7 +125,10 @@ export const useConfigStore = create((set, get) => ({
     }
     set((state) => ({
       chats: state.chats.filter(chat => chat.id !== chatId),
-      isConfigOpen: false
+      isConfigOpen: false,
+      ...chatId === state.currentChat.id && {
+        currentChat: {}
+      }
     }))
   },
   getChats: async ()=>{
