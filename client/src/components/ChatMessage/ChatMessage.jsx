@@ -16,7 +16,7 @@ export default function ChatMessage({ message }) {
           }
         </div>
         <div className='message'>
-          {message.message}
+          {message.message?.trim()}
         </div>
       </div>
     </div>
