@@ -21,7 +21,7 @@ export const useConfigStore = create((set, get) => ({
   },
   saveConfig: async ()=>{
     const updateChat = get().currentChat
-    const response = await fetch(`http://localhost:3080/db/chats/${updateChat.id}`, {
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/db/chats/${updateChat.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export const useConfigStore = create((set, get) => ({
       ...get().currentChat,
       chatLog: [...get().currentChat.chatLog, log]
     }
-    const response = await fetch(`http://localhost:3080/db/chats/${updateChat.id}`, {
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/db/chats/${updateChat.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export const useConfigStore = create((set, get) => ({
       ...get().currentChat,
       chatLog: []
     }
-    const response = await fetch(`http://localhost:3080/db/chats/${updateChat.id}`, {
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/db/chats/${updateChat.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ export const useConfigStore = create((set, get) => ({
       chatLog: []
     }
     //add to firebase
-    const response = await fetch('http://localhost:3080/db/chats', {
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/db/chats`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -112,7 +112,7 @@ export const useConfigStore = create((set, get) => ({
     }))
   },
   deleteChat: async (chatId) => {
-    const response = await fetch(`http://localhost:3080/db/chats/${chatId}`, {
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/db/chats/${chatId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -129,7 +129,7 @@ export const useConfigStore = create((set, get) => ({
     }))
   },
   getChats: async ()=>{
-    const response = await fetch('http://localhost:3080/db/chats')
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/db/chats`)
     const {chats, error} = await response.json()
     if(error){
       console.log(error)
@@ -138,7 +138,7 @@ export const useConfigStore = create((set, get) => ({
     get().setChats(chats)
   },
   getModels : async ()=>{
-    const response = await fetch('http://localhost:3080/openai/models')
+    const response = await fetch(`${process.env.FRONTEND_URL || ''}/openai/models`)
     const {models, error} = await response.json()
     if(error){
       console.log(error)
