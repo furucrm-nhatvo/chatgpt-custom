@@ -36,7 +36,7 @@ export default function ChatBox() {
   const formRef = useRef(null)
   return (
     <section className='chatbox'>
-      {Object.keys(currentChat).length > 0 ? <>
+      {Object.keys(currentChat || {}).length > 0 ? <>
         <div className='chat-log'>
         {chatLog.map((message, index) => {
           return <ChatMessage key={index} message={message} />
