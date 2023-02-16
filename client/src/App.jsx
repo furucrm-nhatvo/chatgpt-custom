@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <ChatContainer/>
-      {Object.keys(currentChat).length>0 && <div className={`config-container ${isConfigOpen && 'open'}`}>
+      {currentChat?.id && <div className={`config-container ${isConfigOpen && 'open'}`}>
         <ChatConfig/>
       </div>}
       <div className={`config-padder ${isConfigOpen && 'open'}`}></div>
