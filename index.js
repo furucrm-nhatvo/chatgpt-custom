@@ -1,10 +1,9 @@
-// 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
 const { Configuration, OpenAIApi } = require("openai");
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
 
 const serviceAccount = require('./serviceAccountKey.json');
 
@@ -17,7 +16,7 @@ const db = getFirestore();
 
 const configuration = new Configuration({
     organization: "org-Hw74F59UFBu7mnHsKx116yFm",
-    apiKey: "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",
+    apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 const app = express()

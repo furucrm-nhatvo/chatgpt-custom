@@ -31,4 +31,5 @@
 .message{
   padding-left: 40px;
   padding-right: 40px;
+  white-space: break-spaces;
 }

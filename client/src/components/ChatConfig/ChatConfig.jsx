@@ -8,7 +8,7 @@ export default function ChatConfig() {
     const models = useConfigStore(state=>state.models)
     const { model, temperature, tokens, title } = currentChat.config || {}
     return (
-        <aside className='sidemenu'>
+        <aside className='sidemenu flex'>
             <p>Title</p>
             <input
                 className='sidemenu-btn'
@@ -40,7 +40,7 @@ export default function ChatConfig() {
                 value={tokens||''}
                 onChange={(e) => setConfig('tokens', e.target.value)}
             ></input>
-            <div className='sidemenu-btn' style={{cursor:'pointer'}} onClick={saveConfig}>Save</div>
+            <div className='sidemenu-btn' style={{cursor:'pointer', marginTop:'auto'}} onClick={saveConfig}>Save</div>
         </aside>
     )
 }
