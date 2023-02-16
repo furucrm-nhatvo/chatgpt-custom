@@ -36,7 +36,8 @@ export default function ChatBox() {
   const formRef = useRef(null)
   return (
     <section className='chatbox'>
-      <div className='chat-log'>
+      {Object.keys(currentChat).length > 0 ? <>
+        <div className='chat-log'>
         {chatLog.map((message, index) => {
           return <ChatMessage key={index} message={message} />
         })}
@@ -57,6 +58,7 @@ export default function ChatBox() {
           ></textarea>
         </form>
       </div>
+      </>:<p>Please select a chat or create a new one</p>}
     </section>
   )
 }

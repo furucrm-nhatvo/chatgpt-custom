@@ -136,6 +136,7 @@ export const useConfigStore = create((set, get) => ({
       return
     }
     get().setChats(chats)
+    get().setCurrentChat(chats[0])
   },
   getModels : async ()=>{
     const response = await fetch(`${process.env.FRONTEND_URL || ''}/openai/models`)
